@@ -1,0 +1,192 @@
+' @startuml
+' participant Participant as Foo
+' actor Actor as Foo1
+' boundary Boundary as Foo2
+' control Control as Foo3
+' entity Entity as Foo4
+' database Database as Foo5
+' collections Collections as Foo6
+' queue Queue as Foo7
+' Foo -> Foo1 : To actor
+' Foo -> Foo2 : To boundary
+' Foo -> Foo3 : To control
+' Foo -> Foo4 : To entity
+' Foo -> Foo5 : To database
+' Foo -> Foo6 : To collections
+' Foo -> Foo7: To queue
+' @enduml
+
+@startuml basic
+title Basic
+participant Ethereum as ChainA
+participant Binance as ChainB
+ChainA -> ChainB : Bridge
+@enduml
+
+@startuml basic(change)
+title Basic(change)
+participant "Ethereum(-5)" as ChainA
+participant "Binance(+5)" as ChainB
+ChainA -> ChainB : Bridge
+@enduml
+
+@startuml basic(exchange)
+title basic(exchange)
+box "Ethereum"
+actor "Admin" as AdminE
+actor "User" as UserE
+end box
+
+box "Binance"
+actor "Admin" as AdminB
+actor "User" as UserB
+end box
+
+AdminE <- UserE : 5
+AdminB -> UserB : 5
+@enduml
+
+@startuml basic(wrong exchange)
+title basic(wrong exchange)
+box "Ethereum"
+actor "Admin" as Admin
+actor "User" as UserE
+end box
+
+box "Binance"
+actor "User" as UserB
+end box
+
+Admin <- UserE : 5
+Admin -> UserB : 5
+@enduml
+
+@startuml using vault
+title Using Vault Contract
+box "Ethereum"
+actor "User" as UserE
+participant "Vault" as VaultE
+end box
+
+box "Binance"
+actor "Admin" as AdminB
+actor "User" as UserB
+end box
+
+UserE -> VaultE : 5(lock)
+AdminB -> UserB : 5
+@enduml
+
+@startuml using vault2
+title Using Vault Contract
+box "Ethereum"
+actor "User" as UserE
+participant "Vault" as VaultE
+end box
+
+box "Binance"
+actor "Admin" as AdminB
+actor "User" as UserB
+end box
+
+UserE -> VaultE : 5(lock)
+AdminB -> UserB : 5
+UserE <- VaultE : 5(unlock)
+@enduml
+
+@startuml using vault3
+title Using Vault Contract
+box "Ethereum"
+actor "User" as UserE
+participant "Vault" as VaultE
+participant "Process" as ProcessE
+end box
+
+box "Validate"
+participant "Process" as ProcessV
+end box
+
+box "Binance"
+participant "Process" as ProcessB
+actor "Admin" as AdminB
+actor "User" as UserB
+end box
+
+UserE -> VaultE : 5(lock)
+ProcessE -> ProcessV : logic
+ProcessV -> ProcessB : logic
+AdminB -> UserB : WETH \n 5(mint or extra...)
+' UserE <- VaultE : 5(unlock)
+@enduml
+
+@startuml using vault4
+title Using Vault Contract
+box "Ethereum"
+actor "User" as UserE
+participant "Vault" as VaultE
+participant "Process" as ProcessE
+end box
+
+box "Validate"
+participant "Process" as ProcessV
+end box
+
+box "Binance"
+participant "Process" as ProcessB
+participant "Vault or Router" as VaultB
+actor "User" as UserB
+end box
+
+UserE -> VaultE : 5(lock)
+ProcessE -> ProcessV : logic
+ProcessV -> ProcessB : logic
+VaultB -> UserB : WETH \n 5(mint or extra...)
+' UserE <- VaultE : 5(unlock)
+@enduml
+
+@startuml using vault5
+title Using Vault Contract
+box "Ethereum"
+actor "User" as UserE
+participant "Vault" as VaultE
+participant "Process" as ProcessE
+end box
+
+box "Validate"
+participant "Process" as ProcessV
+end box
+
+box "Binance"
+participant "Process" as ProcessB
+actor "Admin" as AdminB
+participant "Vault or Router" as VaultB
+actor "User" as UserB
+end box
+
+UserE -> VaultE : 5(lock)
+ProcessE -> ProcessV : logic
+ProcessV -> ProcessB : logic
+AdminB -> VaultB : WETH \n 5(mint or extra...)
+VaultB -> UserB : WETH \n 5(mint or extra...)
+' UserE <- VaultE : 5(unlock)
+@enduml
+
+
+@startuml 
+box "Ethereum"
+participant "User" as U
+participant "User Interface" as UI
+end box
+
+box "Binance"
+participant "Server" as S
+database "Database" as DB
+end box
+
+U -> UI : Clicks button
+UI -> S : Request data
+S -> DB : Query data
+DB -> S : Return data
+S -> UI : Response data
+UI -> U : Display data
+@enduml

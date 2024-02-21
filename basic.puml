@@ -1,0 +1,24 @@
+@startuml basic
+
+' !theme vibrant
+' header 1.0 ver TODO
+' footer Bridge %page%/%lastpage%
+
+' title Issue
+
+' actor Player1 as p1 #BlanchedAlmond
+
+' box "GameServer" #Snow
+' participant GameServer
+' end box
+
+participant Function as Foo
+participant Event as Foo1
+Foo -> Foo1 : Run code
+
+participant Event as Foo2
+participant Function as Foo3
+Foo2 -> Foo3 : Validate
+
+@enduml
+
